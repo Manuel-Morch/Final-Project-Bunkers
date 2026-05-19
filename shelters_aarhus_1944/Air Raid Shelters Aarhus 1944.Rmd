@@ -16,7 +16,7 @@ library(sf)
 
 # First we will read the relevant data from the MELICA dataset.The data can be downloaded here: https://github.com/MELICA-AU/shelter-data/blob/master/output_data/BDG_long.rds
 
-tilflugtsrum <- readRDS("BDG_long.rds")
+tilflugtsrum <- readRDS("data_raw/BDG_long.rds")
 
 #And now we will take a look at the data: 
 glimpse(tilflugtsrum)
