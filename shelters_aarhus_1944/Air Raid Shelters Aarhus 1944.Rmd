@@ -1,7 +1,7 @@
 ---
 title: "Aarhus air raid shelters in 1944"
 author: "Manuel Ø. Mørch"
-date: "2026-05-01"
+date: "2026-05-19"
 output: html_document
 ---
 
@@ -34,7 +34,6 @@ tilflugtsrum_1944 <- tilflugtsrum %>%
 
 ```{r mapping the air raid shelters on a modern map, warning=FALSE}
 library(leaflet)
-library(htmlwidgets)
 
 
 
@@ -46,8 +45,6 @@ tilflugtsrum_map <- leaflet(tilflugtsrum_1944) %>%
                            "Location certainty:", tilflugtsrum_1944$Certain_location, "<br>",
                            "Accuracy:", tilflugtsrum_1944$Accuracy, "<br>",
                            "Notes:", tilflugtsrum_1944$Notes))
-
-saveWidget(tilflugtsrum_map, "Tilflugtsrum.html", selfcontained = TRUE)
 
 tilflugtsrum_map
 
@@ -64,9 +61,6 @@ tilflugtsrum_heatmap <- leaflet(tilflugtsrum_1944) %>%
     blur = 20        # adjust the blur radius
   )
 tilflugtsrum_heatmap
-
-saveWidget(tilflugtsrum_heatmap, "TilflugtsrumHeatmap.html", selfcontained = TRUE)
-
 ```
 These maps are quite nice, however they show us the bunkers' locations on a moderne map.
 This is an issue because the landscape has changed a lot since 1944, and we want to see what areas were protected in 1944.
@@ -75,6 +69,11 @@ However, since the MELICA dataset contains shelters outside of the Touristmap's 
 # Adding the historical map for appropriate spatial analysis of the historical period.
 
 ```{r Historical with markers, warning=FALSE}
+library(htmlwidgets)
+
+# For this section, you will need "TouristMap_Tiles" folder, which contains the tiles for the historical map. You can download it here: https://sciencedata.dk/shared/c55a01843cd0c86d00406f3c75e4001f
+# Remember to unzip the folder!
+
 
 touristmap_markers <- leaflet(tilflugtsrum_1944) %>%
    setView(lng = 10.2039, lat = 56.1629, zoom = 13) %>%
@@ -99,7 +98,7 @@ touristmap_markers <- leaflet(tilflugtsrum_1944) %>%
 touristmap_markers
 
 
-saveWidget(touristmap_markers, "Touristmap_markers.html", selfcontained = TRUE)
+saveWidget(touristmap_markers, "Touristmap_markers.html")
 ```
 
 
@@ -122,6 +121,8 @@ touristmap_heatmap <- leaflet(tilflugtsrum_1944) %>%
 
 touristmap_heatmap
 
-saveWidget(touristmap_heatmap, "Touristmap_heatmap.html", selfcontained = TRUE)
-```
+saveWidget(touristmap_heatmap, "Touristmap_heatmap.html")
 
+#I wanted to have the output in a different folder, but since the htmlwidgets package does not allow for that, I have to save the output in the same folder as TouristMap_Tiles. If the output was saved in a different folder, the TouristMap_Tiles couldn't be loaded into the HTML.
+
+``` 
