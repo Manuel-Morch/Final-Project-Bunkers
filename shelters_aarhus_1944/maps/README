@@ -1,7 +1,7 @@
-***NOT FINISHED***
-**All the files were too big to upload**
-
 This folder contains the original JPG file, called "Touristmap 1942-1946.jpg", the georeferenced version called "Touristmap 1942-1946_modified" as well as the folder for the generated tiles, called "TouristMap_Tiles"
+
+As the files were too large to upload to GitHub, i uploaded them to sciencedata.dk. In order for the .rmd to work you have to download the .zip file called "TouristMap_tiles" and unzip it in the same folder as you open the downloaded .rmd file.
+
 Touristmap 1942-1946: https://sciencedata.dk/shared/0e60edfdcd0513ce455c33c443b69e0c
 Touristmap 1942-1946_modeified: https://sciencedata.dk/shared/c67b2d01339b43671397bbf46b1002bd
 TouristMap_tiles: https://sciencedata.dk/shared/c55a01843cd0c86d00406f3c75e4001f
