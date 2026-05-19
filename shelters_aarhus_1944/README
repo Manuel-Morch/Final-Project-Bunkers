@@ -1,5 +1,0 @@
-This is the folder with all relevant data and code to create our maps showing air raid shelters in Aarhus in 1944.
-
-First download the .rmd file and then download TouristMap_Tiles. Load them both into one folder, and then run the .rmd script.
-
-TouristMap_tiles can be found in the "maps" folder. Remember to unzip.

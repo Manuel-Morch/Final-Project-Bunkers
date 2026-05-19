@@ -5,3 +5,10 @@ As the files were too large to upload to GitHub, i uploaded them to sciencedata.
 Touristmap 1942-1946: https://sciencedata.dk/shared/0e60edfdcd0513ce455c33c443b69e0c
 Touristmap 1942-1946_modeified: https://sciencedata.dk/shared/c67b2d01339b43671397bbf46b1002bd
 TouristMap_tiles: https://sciencedata.dk/shared/c55a01843cd0c86d00406f3c75e4001f
+
+
+This is the folder with all relevant data and code to create our maps showing air raid shelters in Aarhus in 1944.
+
+First download the .rmd file and then download TouristMap_Tiles, then download VDG_long.rds. Load them all into one folder, and then run the .rmd script.
+
+TouristMap_tiles can be found in the "maps" folder. Remember to unzip.
