@@ -95,10 +95,9 @@ touristmap_markers <- leaflet(tilflugtsrum_1944) %>%
     overlayGroups = c("TouristMap (1942-1946)"),
     options = layersControlOptions(collapsed = FALSE))
 
-touristmap_markers
-
-
 saveWidget(touristmap_markers, "Touristmap_markers.html")
+# In order to see the finished map, please open the "Touristmap_markers.html" file.
+
 ```
 
 
@@ -119,9 +118,9 @@ touristmap_heatmap <- leaflet(tilflugtsrum_1944) %>%
     overlayGroups = c("TouristMap (1942-1946)"),
     options = layersControlOptions(collapsed = FALSE))
 
-touristmap_heatmap
-
 saveWidget(touristmap_heatmap, "Touristmap_heatmap.html")
+
+# In order to see the finished map, please open the "Touristmap_heatmap.html" file.
 
 #I wanted to have the output in a different folder, but since the htmlwidgets package does not allow for that, I have to save the output in the same folder as TouristMap_Tiles. If the output was saved in a different folder, the TouristMap_Tiles couldn't be loaded into the HTML.
 
