@@ -43,23 +43,24 @@ data2 <- read.csv("data/Municipal_funds.csv",
                  fileEncoding = "UTF-8-BOM")
 
 # Create the bar chart
-ggplot(data2, aes(x = Additional_municipal_funds, y = Expenditures)) +
-  geom_bar(stat = "identity", fill = "#3498DB", alpha = 0.8) +
+ggplot(data2, aes(x = Expenditures, 
+                  y = reorder(Additional_municipal_funds, Expenditures))) +
+  geom_col(fill = "#3498DB", alpha = 0.8) + 
   labs(
     title = "Municipal Expenditures by Category",
-    x = "Category",
-    y = "Expenditures DKK",
+    x = "Expenditures DKK",
+    y = "Category",
     caption = "Source: Municipal_funds.csv"
   ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 9),
-    panel.grid.major.x = element_blank(),
-    panel.grid.major.y = element_line(color = "gray90"),
+    axis.text.y = element_text(size = 15), 
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color = "gray90"),
     panel.grid.minor = element_blank()
   ) +
-  scale_y_continuous(labels = scales::comma, expand = c(0, 0), 
+  scale_x_continuous(labels = scales::comma, expand = c(0, 0), 
                      limits = c(0, max(data2$Expenditures) * 1.1))
 
 # Save the plot
@@ -77,25 +78,25 @@ data3 <- read.csv("data/Allocation.csv",
 
 
 # Create the bar chart
-ggplot(data3, aes(x = Use_of_state_funds, y = Expenditures)) +
-  geom_bar(stat = "identity", fill = "#3498DB", alpha = 0.8) +
+ggplot(data3, aes(x = Expenditures, 
+                  y = reorder(Use_of_state_funds, Expenditures))) + 
+  geom_col(fill = "#3498DB", alpha = 0.8) + 
   labs(
     title = "State Expenditures by Category",
-    x = "Category",
-    y = "Expenditures DKK",
+    x = "Expenditures DKK",
+    y = "Category",
     caption = "Source: Municipal_funds.csv"
   ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 9),
-    panel.grid.major.x = element_blank(),
-    panel.grid.major.y = element_line(color = "gray90"),
+    axis.text.y = element_text(size = 15), 
+    panel.grid.major.y = element_blank(),
+    panel.grid.major.x = element_line(color = "gray90"),
     panel.grid.minor = element_blank()
   ) +
-  scale_y_continuous(labels = scales::comma, expand = c(0, 0), 
-                     limits = c(0, max(data3$Expenditures) * 1.1))
-
+  scale_x_continuous(labels = scales::comma, expand = c(0, 0), 
+                     limits = c(0, max(data3$Expenditures) * 1.1)) 
 # Save the plot
 ggsave("Plots/Allocation_plot.png", 
        width = 12, 
