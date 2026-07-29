@@ -281,21 +281,17 @@ popup_tekst <- paste("<b>Placename:</b>", places2$Placename,"<br>",
                      "<b>Notes:</b>", places2$Notes, "<br>")
 
 DANmap_final2 <- DANmap %>% 
+  addLayersControl(baseGroups = names(esri),
+        options = layersControlOptions(collapsed = FALSE)) %>% 
   addMarkers(lng = places2$Longitude, 
              lat = places2$Latitude,
              popup = popup_tekst,
              clusterOptions = markerClusterOptions(),
-             group = "Clusters") %>%
-  addMarkers(lng = places2$Longitude, 
-             lat = places2$Latitude,
-             popup = popup_tekst,
-             group = "Points") %>%
-  addLayersControl(
-    baseGroups = c("Clusters", "Points"),
-    options = layersControlOptions(collapsed = FALSE)
-  )
+             group = "Clusters")
 
-DANmap_final2 
+
+DANmap_final2
 
 saveWidget(DANmap_final2, "DANmap.html", selfcontained = TRUE)
 ######################################## CONGRATULATIONS - YOUR ARE DONE :)
+
