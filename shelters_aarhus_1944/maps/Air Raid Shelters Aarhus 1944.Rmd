@@ -41,10 +41,30 @@ library(leaflet)
 
 tilflugtsrum_map <- leaflet(tilflugtsrum_1944) %>%
   addTiles() %>%
-  addMarkers(popup = paste("Capacity:", tilflugtsrum_1944$Capacity, "<br>",
+  addCircleMarkers(radius = 6,
+    fillColor = ~ifelse(Capacity == 100, "red", "blue"),  # If capacity is 100, it is red. Otherwise it is blue. 
+    fillOpacity = 1,
+    popup = paste("Type:", tilflugtsrum_1944$Type, "<br>", 
+                           "Capacity:", tilflugtsrum_1944$Capacity, "<br>",
                            "Location certainty:", tilflugtsrum_1944$Certain_location, "<br>",
                            "Accuracy:", tilflugtsrum_1944$Accuracy, "<br>",
-                           "Notes:", tilflugtsrum_1944$Notes))
+                           "Notes:", tilflugtsrum_1944$Notes)) %>%
+  addScaleBar(position = "bottomleft") %>%
+  addLegend(
+    position ="bottomright",
+    colors = c("red", "blue"),
+    labels = c("Capacity 100", "Capacity 50"),
+    title = "Shelter Capacity"
+  )%>%
+  # Adding a minimap
+  addMiniMap(
+    tiles = providers$OpenStreetMap.Mapnik,
+    toggleDisplay = TRUE,
+    position = "topleft",
+    width = 180,
+    height = 120,
+    zoomLevelOffset = -5
+  )
 
 tilflugtsrum_map
 
@@ -55,10 +75,24 @@ tilflugtsrum_map
 ```{r air raid shelters on modern heatmap, warning=FALSE}
 library(leaflet.extras)
 
+tilflugtsrum_1944 <- tilflugtsrum_1944 %>%
+  mutate(cap_weight = Capacity / 10) #This makes capacities into lower numbers
+
+
 tilflugtsrum_heatmap <- leaflet(tilflugtsrum_1944) %>% 
   addTiles() %>%
-  addHeatmap(intensity = 5, # you can specify an intensity variable if you have one
+  addHeatmap(intensity = ~cap_weight,   # Heatmap intensity by shelter capacity
     blur = 20        # adjust the blur radius
+  )%>%
+  addScaleBar(position = "bottomleft")%>%
+  # Adding a minimap
+  addMiniMap(
+    tiles = providers$OpenStreetMap.Mapnik,
+    toggleDisplay = TRUE,
+    position = "topleft",
+    width = 180,
+    height = 120,
+    zoomLevelOffset = -5
   )
 tilflugtsrum_heatmap
 ```
@@ -84,16 +118,36 @@ touristmap_markers <- leaflet(tilflugtsrum_1944) %>%
     options = tileOptions(minZoom = 0, maxZoom = 18, tms = TRUE), 
     group = "TouristMap (1942-1946)") %>%
   # Adding the markers with popups for the shelter information from the MELICA dataset
-  addMarkers(
+addCircleMarkers(radius = 6,
+    fillColor = ~ifelse(Capacity == 100, "red", "blue"),
+    fillOpacity = 1,
     popup = paste(
       "Capacity:", tilflugtsrum_1944$Capacity, "<br>",
       "Location certainty:", tilflugtsrum_1944$Certain_location, "<br>",
       "Accuracy:", tilflugtsrum_1944$Accuracy, "<br>",
       "Notes:", tilflugtsrum_1944$Notes))%>%
-  # Adding a controlpanel to toggle the historical map layer on and off
+ # Adding a scalebar
+   addScaleBar(position = "bottomleft") %>%
+   # Adding a controlpanel to toggle the historical map layer on and off
   addLayersControl(
     overlayGroups = c("TouristMap (1942-1946)"),
-    options = layersControlOptions(collapsed = FALSE))
+    options = layersControlOptions(collapsed = FALSE)) %>%
+  # Adding a textbox to explain the color coding of the markers
+  addLegend(
+    position ="bottomright",
+    colors = c("red", "blue"),
+    labels = c("Capacity 100", "Capacity 50"),
+    title = "Shelter Capacity") %>%
+  # Adding a minimap to the leaflet map
+  addMiniMap(
+    tiles = providers$OpenStreetMap.Mapnik,
+    toggleDisplay = TRUE,
+    position = "topleft",
+    width = 180,
+    height = 120,
+    zoomLevelOffset = -5
+  )
+ 
 
 saveWidget(touristmap_markers, "Touristmap_markers.html")
 # In order to see the finished map, please open the "Touristmap_markers.html" file.
@@ -111,12 +165,23 @@ touristmap_heatmap <- leaflet(tilflugtsrum_1944) %>%
     options = tileOptions(minZoom = 0, maxZoom = 18, tms = TRUE), 
     group = "TouristMap (1942-1946)") %>%
   # Adding the heatmap layer for the shelter locations
-  addHeatmap(intensity = 5,
+  addHeatmap(intensity = ~cap_weight,
     blur = 20) %>%
    # Adding a controlpanel to toggle the historical map layer on and off
   addLayersControl(
     overlayGroups = c("TouristMap (1942-1946)"),
-    options = layersControlOptions(collapsed = FALSE))
+    options = layersControlOptions(collapsed = FALSE))%>%
+  # Adding a scalebar
+  addScaleBar(position = "bottomleft")%>%
+  # Adding a minimap to the leaflet map
+  addMiniMap(
+    tiles = providers$OpenStreetMap.Mapnik,
+    toggleDisplay = TRUE,
+    position = "topleft",
+    width = 180,
+    height = 120,
+    zoomLevelOffset = -5
+  )
 
 saveWidget(touristmap_heatmap, "Touristmap_heatmap.html")
 
